@@ -1,6 +1,5 @@
 ﻿# go-ResourceBundler
-- en [English](README.md)
-- zh_CN [简体中文](README_cn.md)
+[English](README.md) [简体中文](README_cn.md)
 ## 1. Usage
 ### Package resources
 1. Run sh.\build.sh
