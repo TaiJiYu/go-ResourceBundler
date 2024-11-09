@@ -1,6 +1,5 @@
 ﻿# 资源打包器
-- en [English](README.md)
-- zh_CN [简体中文](README_cn.md)
+[English](README.md) [简体中文](README_cn.md)
 ## 1. 用法
 ### 打包资源
 1. 执行sh .\build.sh
