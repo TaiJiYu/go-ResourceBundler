@@ -22,7 +22,7 @@
 	}
 	err := api.UnpackerInit(o)
 	if err != nil {
-		panic(err)
+        panic(err)  
 	}
 	api.Show()  // 可查看fqm文件基础信息
     fmt.Println(api.Key("filepath/xx.txt"))
@@ -30,7 +30,7 @@
 	api.Close() // 结束后调用
     ```
 
-
+## 2. 文件结构
 |序号|示例|含义|字节数|
 |:--:|:--:|:--:|:--:|
 |1|66 71 6D|文件头|3|

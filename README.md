@@ -28,7 +28,7 @@ The password must be no less than 16 bytes, for example, packer.exe -s codesec
     fmt.Println(api.Key("filepath/xx.txt"))
     api.Close() // Called when finished
     ```
-## 2. File structure
+## 2. File Structure
 
 | No. | Example | Meaning | Number of bytes |
 |:-:|:-:|:-:|:-:|
