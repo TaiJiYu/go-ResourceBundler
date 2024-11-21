@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/taijiyugame/go-ResourceBundler/utils"
+	"github.com/TaiJiYu/go-ResourceBundler/utils"
 )
 
 const (

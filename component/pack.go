@@ -5,7 +5,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/taijiyugame/go-ResourceBundler/utils"
+	"github.com/TaiJiYu/go-ResourceBundler/utils"
 )
 
 type packageByte struct {

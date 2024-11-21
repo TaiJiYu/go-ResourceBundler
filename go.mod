@@ -1,4 +1,4 @@
-module github.com/taijiyugame/go-ResourceBundler
+module github.com/TaiJiYu/go-ResourceBundler
 
 go 1.23.3
 

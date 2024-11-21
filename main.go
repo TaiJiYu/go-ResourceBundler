@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 
-	"github.com/taijiyugame/go-ResourceBundler/api"
-	"github.com/taijiyugame/go-ResourceBundler/component"
+	"github.com/TaiJiYu/go-ResourceBundler/api"
+	"github.com/TaiJiYu/go-ResourceBundler/component"
 )
 
 func main() {
