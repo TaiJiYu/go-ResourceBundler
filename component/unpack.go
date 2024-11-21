@@ -1,8 +1,9 @@
 package component
 
 import (
-	"go-resource-bundler/utils"
 	"path"
+
+	"github.com/taijiyugame/go-ResourceBundler/utils"
 )
 
 type unpackClient struct {

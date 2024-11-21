@@ -1,6 +1,6 @@
 package api
 
-import "go-resource-bundler/component"
+import "github.com/taijiyugame/go-ResourceBundler/component"
 
 type IPacker interface {
 	Add(key string, data []byte)

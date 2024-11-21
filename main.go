@@ -2,8 +2,9 @@ package main
 
 import (
 	"flag"
-	"go-resource-bundler/api"
-	"go-resource-bundler/component"
+
+	"github.com/taijiyugame/go-ResourceBundler/api"
+	"github.com/taijiyugame/go-ResourceBundler/component"
 )
 
 func main() {

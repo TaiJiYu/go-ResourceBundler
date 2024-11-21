@@ -3,9 +3,10 @@ package component
 import (
 	"encoding/hex"
 	"fmt"
-	"go-resource-bundler/utils"
 	"os"
 	"time"
+
+	"github.com/taijiyugame/go-ResourceBundler/utils"
 )
 
 const (

@@ -2,9 +2,10 @@ package component
 
 import (
 	"fmt"
-	"go-resource-bundler/utils"
 	"os"
 	"path"
+
+	"github.com/taijiyugame/go-ResourceBundler/utils"
 )
 
 type packageByte struct {
