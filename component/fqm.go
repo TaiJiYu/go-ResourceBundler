@@ -261,7 +261,6 @@ func (f *fQMStruct) readIndexInfo(indexInfo []byte) {
 			},
 		})
 	}
-	fmt.Printf("%+v", f.indexInfo[0])
 }
 
 func (f *fQMStruct) readIndexName(nameData []byte) {
