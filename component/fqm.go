@@ -119,6 +119,11 @@ func (f *fQMStruct) save(path string) error {
 }
 
 func (f *fQMStruct) aesBaseInfo() error {
+	if len(f.secretKey) == 0 {
+		f.baseInfo.indexInfoSize = len(f.keyIndexData)
+		f.baseInfo.indexNameSize = len(f.keyNameData)
+		return nil
+	}
 	keyIndexText, err := utils.AES(f.secretKey, f.keyIndexData)
 	if err != nil {
 		return err
@@ -245,9 +250,6 @@ func (f *fQMStruct) readBaseInfoFromBytes(data []byte) {
 }
 
 func (f *fQMStruct) readIndexInfo(indexInfo []byte) {
-	if f.baseInfo.ifEncrypt {
-
-	}
 	for i := 0; i < len(indexInfo)/18; i++ {
 		chunkIndex := i * 18
 		f.indexInfo = append(f.indexInfo, &fQMIndexInfo{
@@ -259,6 +261,7 @@ func (f *fQMStruct) readIndexInfo(indexInfo []byte) {
 			},
 		})
 	}
+	fmt.Printf("%+v", f.indexInfo[0])
 }
 
 func (f *fQMStruct) readIndexName(nameData []byte) {
