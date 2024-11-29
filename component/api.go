@@ -6,10 +6,11 @@ type UnpackOption struct {
 }
 
 type PackOption struct {
-	SecretKey   []byte // 密码
-	Name        string // 输出文件名
-	ResourceDir string // 打包资源所在的绝对路径
-	OutcomeDir  string // 输出文件的绝对路径
+	SecretKey   []byte   // 密码
+	Name        string   // 输出文件名
+	ResourceDir string   // 打包资源所在的绝对路径
+	OutcomeDir  string   // 输出文件的绝对路径
+	IgnoreDir   []string // 忽略的文件夹
 }
 
 type packer = *packageByte

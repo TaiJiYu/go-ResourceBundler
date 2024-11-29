@@ -9,8 +9,9 @@ import (
 )
 
 type packageByte struct {
-	fqmFile *fQMStruct
-	option  PackOption
+	fqmFile      *fQMStruct
+	option       PackOption
+	ignoreDirMap map[string]bool
 }
 
 func newPackage(options ...PackOption) *packageByte {
@@ -25,7 +26,9 @@ func newPackage(options ...PackOption) *packageByte {
 			Name:        defaultName,
 			ResourceDir: path.Join(exePath, defaultResourceDir),
 			OutcomeDir:  path.Join(exePath, defaultOutcomeDir),
+			IgnoreDir:   make([]string, 0),
 		},
+		ignoreDirMap: make(map[string]bool),
 	}).checkOption(options...)
 }
 
@@ -52,7 +55,19 @@ func (p *packageByte) checkOption(o ...PackOption) *packageByte {
 	if optionU.OutcomeDir != "" {
 		p.option.OutcomeDir = optionU.OutcomeDir
 	}
+	if len(optionU.IgnoreDir) != 0 {
+		p.option.IgnoreDir = optionU.IgnoreDir
+	}
+	for _, i := range p.option.IgnoreDir {
+		p.ignoreDirMap[i] = true
+	}
 	return p
+}
+
+// 返回true则需要忽略
+func (p *packageByte) checkIgnoreDir(dir string) bool {
+	_, ok := p.ignoreDirMap[dir]
+	return ok
 }
 
 func (p *packageByte) add(key string, data []byte) {
@@ -87,7 +102,9 @@ func (p *packageByte) addDir(baseDir, dirName string) {
 	}
 	for _, r := range resous {
 		if r.IsDir() {
-			p.addDir(baseDir, path.Join(dirName, r.Name()))
+			if !p.checkIgnoreDir(r.Name()) {
+				p.addDir(baseDir, path.Join(dirName, r.Name()))
+			}
 		} else {
 			filePath := path.Join(dirName, r.Name())
 			p.addFile(filePath, path.Join(baseDir, filePath))
