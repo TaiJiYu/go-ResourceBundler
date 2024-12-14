@@ -2,6 +2,7 @@ package component
 
 type UnpackOption struct {
 	FqmFilePath string // 需要读取的fqm文件路径
+	UseCache    bool   // 是否使用缓存
 	SecretKey   []byte // 密码
 }
 

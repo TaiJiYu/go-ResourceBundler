@@ -22,6 +22,7 @@ func unpackInit(o ...UnpackOption) error {
 	unpackCli = (&unpackClient{
 		option: UnpackOption{
 			FqmFilePath: fqmPath,
+			UseCache:    false,
 			SecretKey:   make([]byte, 0),
 		},
 		fqmFile: newFQMFile(),
@@ -42,6 +43,9 @@ func key(key string) []byte {
 	if unpackCli == nil || unpackCli.fqmFile == nil {
 		return []byte{}
 	}
+	if !unpackCli.option.UseCache {
+		return unpackCli.fqmFile.key(key)
+	}
 	if v, ok := defaultCache().get(key); ok {
 		return v
 	} else {
@@ -56,7 +60,9 @@ func close() {
 		return
 	}
 	unpackCli.fqmFile.close()
-	defaultCache().cache.Close()
+	if unpackCli.option.UseCache {
+		defaultCache().cache.Close()
+	}
 }
 
 func show() {
