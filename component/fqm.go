@@ -4,6 +4,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"os"
+	"sync"
 	"time"
 
 	"github.com/TaiJiYu/go-ResourceBundler/utils"
@@ -34,6 +35,7 @@ type fQMStruct struct {
 	keyNameData    []byte
 	data           []byte
 	dataBeginIndex int64
+	mutex          sync.Mutex
 }
 
 type fQMBaseInfo struct {
@@ -75,6 +77,7 @@ func newFQMFile() *fQMStruct {
 		data:         make([]byte, 0),
 		secretKey:    make([]byte, 0),
 		keyMap:       make(map[string]fQMDataInfo, 0),
+		mutex:        sync.Mutex{},
 	}
 }
 
@@ -197,7 +200,8 @@ func (f *fQMStruct) readFqmFromFile(path string) error {
 	if err != nil {
 		return err
 	}
-
+	f.mutex.Lock()
+	defer f.mutex.Unlock()
 	f.file = file
 	if buf, err := f.readBytes(headerSize); err != nil {
 		return err
@@ -287,10 +291,14 @@ func (f *fQMStruct) key(key string) []byte {
 	if !ok {
 		panic("key is not exist")
 	}
+	f.mutex.Lock()
 	if _, err := f.file.Seek(f.dataBeginIndex+int64(v.dataBeginIndex), 0); err != nil {
 		panic(err)
 	}
-	if buf, err := f.readBytes(v.dataSize); err != nil {
+	buf, err := f.readBytes(v.dataSize)
+	f.mutex.Unlock()
+
+	if err != nil {
 		panic(err)
 	} else if data, err := f.deAesData(buf); err != nil {
 		panic(err)

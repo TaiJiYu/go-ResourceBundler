@@ -25,7 +25,7 @@ func (p packer) PackResource()                   { p.packResource() }
 func (p packer) Save() error                     { return p.save() }
 
 // unpack
-func UnpackerInit(o ...UnpackOption) error { return unpackInit(o...) }
-func Key(k string) []byte                  { return key(k) }
-func Close()                               { close() }
-func Show()                                { show() }
+func UnpackerInit(o ...UnpackOption) (*unpackClient, error) { return unpackInit(o...) }
+func (u *unpackClient) Key(k string) []byte                 { return u.key(k) }
+func (u *unpackClient) Close()                              { u.close() }
+func (u *unpackClient) Show()                               { u.show() }

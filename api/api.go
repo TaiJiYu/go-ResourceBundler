@@ -13,8 +13,13 @@ type IPacker interface {
 // packer
 func NewPacker(o ...component.PackOption) IPacker { return component.NewPacker(o...) }
 
+type IUnPacker interface {
+	Key(key string) []byte
+	Close()
+	Show()
+}
+
 // unpacker
-func UnpackerInit(o ...component.UnpackOption) error { return component.UnpackerInit(o...) }
-func Key(key string) []byte                          { return component.Key(key) }
-func Close()                                         { component.Close() }
-func Show()                                          { component.Show() }
+func UnpackerInit(o ...component.UnpackOption) (IUnPacker, error) {
+	return component.UnpackerInit(o...)
+}

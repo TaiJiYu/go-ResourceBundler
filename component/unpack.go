@@ -11,15 +11,13 @@ type unpackClient struct {
 	option  UnpackOption
 }
 
-var unpackCli *unpackClient
-
-func unpackInit(o ...UnpackOption) error {
+func unpackInit(o ...UnpackOption) (*unpackClient, error) {
 	exePath, err := utils.RunPath()
 	if err != nil {
-		return err
+		return nil, err
 	}
 	fqmPath := path.Join(exePath, defaultOutcomeDir)
-	unpackCli = (&unpackClient{
+	unpackCli := (&unpackClient{
 		option: UnpackOption{
 			FqmFilePath: fqmPath,
 			UseCache:    false,
@@ -27,7 +25,11 @@ func unpackInit(o ...UnpackOption) error {
 		},
 		fqmFile: newFQMFile(),
 	}).checkOption(o...)
-	return unpackCli.fqmFile.readFqmFromFile(unpackCli.option.FqmFilePath)
+	if err := unpackCli.fqmFile.readFqmFromFile(unpackCli.option.FqmFilePath); err != nil {
+		return nil, err
+	} else {
+		return unpackCli, nil
+	}
 }
 
 func (u *unpackClient) checkOption(o ...UnpackOption) *unpackClient {
@@ -39,35 +41,29 @@ func (u *unpackClient) checkOption(o ...UnpackOption) *unpackClient {
 	return u
 }
 
-func key(key string) []byte {
-	if unpackCli == nil || unpackCli.fqmFile == nil {
-		return []byte{}
-	}
-	if !unpackCli.option.UseCache {
-		return unpackCli.fqmFile.key(key)
+func (u *unpackClient) key(key string) []byte {
+	if !u.option.UseCache {
+		return u.fqmFile.key(key)
 	}
 	if v, ok := defaultCache().get(key); ok {
 		return v
 	} else {
-		data := unpackCli.fqmFile.key(key)
+		data := u.fqmFile.key(key)
 		defaultCache().set(key, data)
 		return data
 	}
 }
 
-func close() {
-	if unpackCli == nil || unpackCli.fqmFile == nil {
+func (u *unpackClient) close() {
+	if u == nil || u.fqmFile == nil {
 		return
 	}
-	unpackCli.fqmFile.close()
-	if unpackCli.option.UseCache {
+	u.fqmFile.close()
+	if u.option.UseCache {
 		defaultCache().cache.Close()
 	}
 }
 
-func show() {
-	if unpackCli == nil || unpackCli.fqmFile == nil {
-		return
-	}
-	unpackCli.fqmFile.show()
+func (u *unpackClient) show() {
+	u.fqmFile.show()
 }
