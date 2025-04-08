@@ -289,7 +289,7 @@ func (f *fQMStruct) show() {
 func (f *fQMStruct) key(key string) []byte {
 	v, ok := f.keyMap[key]
 	if !ok {
-		panic("key is not exist")
+		panic(fmt.Errorf("key[%v] is not exist", key))
 	}
 	f.mutex.Lock()
 	if _, err := f.file.Seek(f.dataBeginIndex+int64(v.dataBeginIndex), 0); err != nil {
